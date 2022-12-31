@@ -2,7 +2,7 @@
 
 # get_files_path
 import os
-import re 
+import re
 
 def get_files_in_dir(dir_path):
     """return target files in a list"""

@@ -22,7 +22,7 @@ def cpu_usage_error():
 def memory_usage_error():
     # Report an error if available memory is less than 500MB
     mem = psutil.virtual_memory()
-    threshold = 30000 * 1024 * 1024  # 500MB
+    threshold = 500 * 1024 * 1024  # 500MB
     print("memory_usage: {}".format(mem.available))
     if mem.available <= threshold:
         return True
@@ -32,7 +32,7 @@ def memory_usage_error():
 
 def disk_usage_error():
     # Report an error if available disk space is lower than 20%
-    disk = psutil.disk_usage("H:\\")
+    disk = psutil.disk_usage("/")
     threshold = 100-20 # more then 80%
     print("disk_usage: {}".format(disk.percent))
     if disk.percent >= threshold:
@@ -56,12 +56,12 @@ def send_error_email(error_message):
     subject = error_message
     body = "Please check your system and resolve the issue as soon as possible."
 
-    message = emails.generate(sender, receiver, subject, body)
+    message = emails.geberate_no_attachment(sender, receiver, subject, body)
     emails.send(message)
 
 
 def main():
-    #while True:
+    # while True:
         if cpu_usage_error():
             print("Error - CPU usage is over 80%")
             send_error_email("Error - CPU usage is over 80%")
@@ -73,14 +73,14 @@ def main():
         if disk_usage_error():
             print("Error - Available disk space is less than 20%")
             send_error_email("Error - Available disk space is less than 20%")
-        
+
         if localhost_ip():
             print("Error - localhost cannot be resolved to 127.0.0.1")
             send_error_email("Error - localhost cannot be resolved to 127.0.0.1")
-        
-        sleep(60)
 
-            
+        # sleep(60)
+
+
 
 
 

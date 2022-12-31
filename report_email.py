@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import json
 import reports
 import os
@@ -30,8 +32,10 @@ def main():
   # generate pdf report
   now = datetime.now()
   now_str = now.strftime("%B %d, %Y ")
-  reports.generate_report("fruits.pdf", "Process update on {}".format(now_str), "<br/>".join(report_data))
-
+  attachment = "/tmp/processed.pdf"
+  title = "Process update on {}".format(now_str)
+  paragraph = "<br/>".join(report_data)
+  reports.generate_report(attachment, title, paragraph)
 
   # send an email
   sender = "automation@example.com"
@@ -39,7 +43,7 @@ def main():
   subject = "Upload Completed - Online Fruit Store"
   body = "All fruits are uploaded to our website successfully. A detailed list is attached to this email."
 
-  message = emails.generate(sender, receiver, subject, body, "/tmp/fruits.pdf")
+  message = emails.generate(sender, receiver, subject, body, "/tmp/processed.pdf")
   emails.send(message)
 
 if __name__ == "__main__":

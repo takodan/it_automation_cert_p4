@@ -2,7 +2,7 @@
 
 # change_image
 import os
-import re 
+import re
 from PIL import Image
 
 def get_files_in_dir(dir_path):
@@ -16,23 +16,23 @@ def get_files_in_dir(dir_path):
             if re.search(r"\.tiff", os.path.join(dir_path, item)) != None:
                 files_list.append(item)
 
-    # check print(files_list)
+    print(files_list)
     return files_list
 
 
 def resize_convert_image(im_class, dest_path):
-    
+    print(dest_path[:-4]+"jpeg")
     im_resized = im_class.resize((600, 400))
-    im_resized.convert('RGB').save( dest_path, "JPEG" ) # file name might change
+    im_resized.convert('RGB').save( dest_path[:-4]+"jpeg", "JPEG" ) # file name might change
 
 def main():
     source_dir = ""
     dest_dir = ""
     while True:
-        source_dir = os.path.abspath(input("please enter the source directory: "))
-        dest_dir = os.path.abspath(input("please enter the destination directory: "))
+        source_dir = input("please enter the source directory abspath: ")
+        dest_dir = input("please enter the destination directory abspath: ")
         # valid path
-        # check print(source_path, dest_path)
+        print(source_dir, dest_dir)
         if os.path.isdir(source_dir) and os.path.isdir(dest_dir) :
             print("directory valid")
             break
@@ -44,8 +44,8 @@ def main():
     for image in images_list:
         dest_path = os.path.join(dest_dir, image)
         with Image.open(os.path.join(source_dir, image)) as im_class:
-            resize_convert_image(im_class, source_dir)
+            resize_convert_image(im_class, os.path.join(source_dir, image))
 
 
 if __name__ == "__main__":
-    main()  
+    main()
